@@ -44,7 +44,26 @@ class SyncPhrasesAction
         ], [
             'value' => (empty($value) ? null : $value),
             'parameters' => is_string($value) ? getPhraseParameters($value) : null,
-            'phrase_id' => $translation->source ? null : $source->phrases()->where('key', $key)->where('group', $translationFile->name)->first()?->id,
+            'phrase_id' => (function () use ($translation, $source, $key, $isRoot, $translationFile) {
+                if ($translation->source) {
+                    return null;
+                }
+
+                $source->loadMissing('phrases.file');
+
+                $match = $source->phrases->first(function ($phrase) use ($key, $isRoot, $translationFile) {
+                    if ($phrase->key !== $key) {
+                        return false;
+                    }
+                    if ($isRoot) {
+                        return optional($phrase->file)->is_root === true;
+                    }
+
+                    return $phrase->group === $translationFile->name;
+                });
+
+                return $match?->id;
+            })(),
         ]);
     }
 }
