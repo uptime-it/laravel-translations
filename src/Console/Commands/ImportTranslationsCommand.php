@@ -114,13 +114,23 @@ class ImportTranslationsCommand extends Command
 
     public function syncTranslations(Translation $translation, string $locale): void
     {
+        $keys = [];
+
         foreach ($this->manager->getTranslations($locale) as $file => $translations) {
             foreach (Arr::dot($translations) as $key => $value) {
+                $keys[] = $key;
                 SyncPhrasesAction::execute($translation, $key, $value, $locale, $file, $this->overwrite);
             }
         }
 
         if ($locale === config('translations.source_language')) {
+            $translation->load('phrases');
+            foreach ($translation->phrases as $phrase) {
+                if (! in_array($phrase->key, $keys, true)) {
+                    $phrase->delete();
+                }
+            }
+
             return;
         }
 
