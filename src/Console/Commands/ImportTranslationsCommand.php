@@ -37,7 +37,7 @@ class ImportTranslationsCommand extends Command
         $this->importLanguages();
 
         if ($this->option('fresh') && $this->confirm('Are you sure you want to truncate all translations and phrases?')) {
-            $this->info('Truncating translations and phrases...'.PHP_EOL);
+            $this->info('Truncating translations and phrases...' . PHP_EOL);
 
             $this->truncateTables();
         }
@@ -48,7 +48,7 @@ class ImportTranslationsCommand extends Command
 
         $translation = $this->createOrGetSourceLanguage();
 
-        $this->info('Importing translations...'.PHP_EOL);
+        $this->info('Importing translations...' . PHP_EOL);
 
         $this->withProgressBar($this->manager->getLocales(), function ($locale) use ($translation) {
             $this->syncTranslations($translation, $locale);
@@ -57,7 +57,7 @@ class ImportTranslationsCommand extends Command
 
     protected function importLanguages(): void
     {
-        if (! $this->getSchema()->hasTable('ltu_languages') || Language::count() === 0) {
+        if (!$this->getSchema()->hasTable('ltu_languages') || Language::count() === 0) {
             if ($this->confirm('The ltu_languages table does not exist or is empty, would you like to install the default languages?', true)) {
                 $this->call('db:seed', ['--class' => LanguagesTableSeeder::class]);
             } else {
@@ -86,13 +86,13 @@ class ImportTranslationsCommand extends Command
     {
         $language = Language::where('code', config('translations.source_language'))->first();
 
-        if (! $language) {
-            $this->error('Language with code '.config('translations.source_language').' not found'.PHP_EOL);
+        if (!$language) {
+            $this->error('Language with code ' . config('translations.source_language') . ' not found' . PHP_EOL);
 
             exit;
         }
 
-        if (! is_dir(lang_path()) || count(scandir(lang_path())) <= 2) {
+        if (!is_dir(lang_path()) || count(scandir(lang_path())) <= 2) {
             if ($this->confirm('It seems that you don\'t have any languages yet, would you like to publish the default language files?', true)) {
                 $this->call('lang:publish');
             } else {
@@ -114,23 +114,13 @@ class ImportTranslationsCommand extends Command
 
     public function syncTranslations(Translation $translation, string $locale): void
     {
-        $keys = [];
-
         foreach ($this->manager->getTranslations($locale) as $file => $translations) {
             foreach (Arr::dot($translations) as $key => $value) {
-                $keys[] = $key;
                 SyncPhrasesAction::execute($translation, $key, $value, $locale, $file, $this->overwrite);
             }
         }
 
         if ($locale === config('translations.source_language')) {
-            $translation->load('phrases');
-            foreach ($translation->phrases as $phrase) {
-                if (! in_array($phrase->key, $keys, true)) {
-                    $phrase->delete();
-                }
-            }
-
             return;
         }
 
@@ -162,16 +152,16 @@ class ImportTranslationsCommand extends Command
                     return true;
                 }
 
-                return $trPhrase->group === $group && ! $isRoot;
+                return $trPhrase->group === $group && !$isRoot;
             });
 
-            if (! $exists) {
-                $fileName = $phrase->file->name.'.'.$phrase->file->extension;
+            if (!$exists) {
+                $fileName = $phrase->file->name . '.' . $phrase->file->extension;
 
                 if ($phrase->file->name === config('translations.source_language')) {
-                    $fileName = Str::replaceStart(config('translations.source_language').'.', "{$locale}.", $fileName);
+                    $fileName = Str::replaceStart(config('translations.source_language') . '.', "{$locale}.", $fileName);
                 } else {
-                    $fileName = Str::replaceStart(config('translations.source_language').'/', "{$locale}/", $fileName);
+                    $fileName = Str::replaceStart(config('translations.source_language') . '/', "{$locale}/", $fileName);
                 }
 
                 SyncPhrasesAction::execute($phrase->translation, $key, '', $locale, $fileName);
