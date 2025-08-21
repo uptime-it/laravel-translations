@@ -137,10 +137,25 @@ class ImportTranslationsCommand extends Command
         ]);
 
         $source->load('phrases.translation', 'phrases.file');
-        $translation->load('phrases');
+        $translation->load('phrases.file');
 
-        $source->phrases->each(function ($phrase) use ($translation, $locale) {
-            if (! $translation->phrases->where('key', $phrase->key)->where('group', $phrase->group)->first()) {
+        foreach ($source->phrases as $phrase) {
+            $isRoot = optional($phrase->file)->is_root === true;
+            $key = $phrase->key;
+            $group = $phrase->group;
+
+            $exists = $translation->phrases->first(function ($trPhrase) use ($key, $isRoot, $group) {
+                if ($trPhrase->key !== $key) {
+                    return false;
+                }
+                if (optional($trPhrase->file)->is_root === true && $isRoot) {
+                    return true;
+                }
+
+                return $trPhrase->group === $group && ! $isRoot;
+            });
+
+            if (! $exists) {
                 $fileName = $phrase->file->name.'.'.$phrase->file->extension;
 
                 if ($phrase->file->name === config('translations.source_language')) {
@@ -149,8 +164,8 @@ class ImportTranslationsCommand extends Command
                     $fileName = Str::replaceStart(config('translations.source_language').'/', "{$locale}/", $fileName);
                 }
 
-                SyncPhrasesAction::execute($phrase->translation, $phrase->key, '', $locale, $fileName);
+                SyncPhrasesAction::execute($phrase->translation, $key, '', $locale, $fileName);
             }
-        });
+        }
     }
 }
