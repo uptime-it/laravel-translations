@@ -19,7 +19,7 @@ class PublishCommand extends Command
             $this->line('Your application already have the Translations UI assets');
 
             if (! $this->confirm('Do you want to rewrite?')) {
-                return self::FAILURE;
+                return self::SUCCESS;
             }
         }
 
