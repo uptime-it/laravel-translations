@@ -30,7 +30,7 @@ const updateProfileInformation = () => {
             <div class="space-y-1">
                 <InputLabel for="name" value="Name" />
 
-                <InputText id="name" v-model="form.name" :error="form.errors.name" type="text" required autofocus autocomplete="name" />
+                <InputText id="name" v-model="form.name" :error="form.errors.name" type="text" required autofocus autocomplete="off" />
 
                 <InputError :message="form.errors.name" />
             </div>
@@ -38,7 +38,7 @@ const updateProfileInformation = () => {
             <div class="space-y-1">
                 <InputLabel for="email" value="Email" />
 
-                <InputText id="email" v-model="form.email" :error="form.errors.email" type="email" autocomplete="username" />
+                <InputText id="email" v-model="form.email" :error="form.errors.email" type="email" autocomplete="off" />
 
                 <InputError :message="form.errors.email" />
             </div>

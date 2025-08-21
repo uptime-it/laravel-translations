@@ -42,7 +42,7 @@ const updatePassword = () => {
             <div class="space-y-1">
                 <InputLabel for="current_password" value="Current Password" />
 
-                <InputText id="current_password" ref="currentPasswordInput" v-model="form.current_password" :error="form.errors.current_password" type="password" autocomplete="current-password" />
+                <InputText id="current_password" ref="currentPasswordInput" v-model="form.current_password" :error="form.errors.current_password" type="password" autocomplete="off" />
 
                 <InputError :message="form.errors.current_password" />
             </div>
