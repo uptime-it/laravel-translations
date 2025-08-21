@@ -46,11 +46,6 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-3.0.1.tgz"
   integrity sha512-NPljRHkq4a14YzZ3YD406uaxh7s0g6eAq3L9aLOWywoqe8PkYamAvtsh7KNX6c++ihDrJ0RiU+/z7rGnhlZ5ww==
 
-"@esbuild/darwin-arm64@0.18.20":
-  version "0.18.20"
-  resolved "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.18.20.tgz"
-  integrity sha512-bxRHW5kHU38zS2lPTPOyuyTm+S+eobPUnTNkdJEfAddYgEcll4xkT8DB9d2008DtTbl7uJag2HuE5NZAZgnNEA==
-
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"
@@ -140,7 +135,7 @@
     deepmerge "^4.0.0"
     qs "^6.9.0"
 
-"@inertiajs/vue3@^1.0.0", "@inertiajs/vue3@^2.0.5":
+"@inertiajs/vue3@^1.0.0 || ^2.0.0", "@inertiajs/vue3@^2.0.5":
   version "2.0.5"
   resolved "https://registry.npmjs.org/@inertiajs/vue3/-/vue3-2.0.5.tgz"
   integrity sha512-FdXJ/yY4rTpRygEHJY7b/Wc/02nI4PZPyLRy4dr/7dVFaVKGljVm1bcX8oBVowXxw7reT01sW2YwjqTSUmXjbg==
@@ -1243,11 +1238,6 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
-fsevents@~2.3.2:
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -1708,10 +1698,10 @@ mlly@^1.2.0, mlly@^1.4.2:
     pkg-types "^1.0.3"
     ufo "^1.3.0"
 
-momentum-modal@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/momentum-modal/-/momentum-modal-0.2.1.tgz"
-  integrity sha512-d40cvkPGZq07vWQZ3yTiA2A6Kp+96+URIZ9/NYUDr711jPK/DnLfH86JuhNm7WD9nlOOLaXMxtB9cef7TCJ5DQ==
+momentum-modal@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.npmjs.org/momentum-modal/-/momentum-modal-0.2.3.tgz"
+  integrity sha512-zKNCdmDAD7vmIipxj9SuXXPY+foV3cZwcplchXlZbwvHlfETDe+WwmoVfzbFFk0ABqv6eY+JkL0OtIVSaEkQxQ==
 
 ms@2.1.2:
   version "2.1.2"
