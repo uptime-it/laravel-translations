@@ -46,6 +46,8 @@ class ContributorController extends BaseController
             $token = Str::random(32);
         } while (Invite::where('token', $token)->first());
 
+        Invite::where('email', $request->get('email'))->delete();
+
         $invite = Invite::create([
             'token' => $token,
             'role' => $request->get('role'),
