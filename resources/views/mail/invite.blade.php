@@ -1,7 +1,7 @@
 @component('mail::message')
     # Hello
 
-    Someone has invited you to join their  translation team on {{ config('app.name') }}.
+    Someone has invited you to join their translation team on {{ config('app.name') }}.
 
     @component('mail::button', ['url' => $link])
         Accept Invitation
@@ -9,8 +9,8 @@
 
     This invitation link will expire in 24 hours.
 
-    If you did not request a password reset, no further action is required.
+    If you did not request a translation invitation, please ignore this e-mail.
 
-    Thanks,<br>
+    Thanks,  
     {{ config('app.name') }}
 @endcomponent
