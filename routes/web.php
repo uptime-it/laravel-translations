@@ -39,11 +39,9 @@ Route::domain(config('translations.domain'))->group(function () {
             // Translation Routes
             Route::get('/', [TranslationController::class, 'index'])->name('translation.index');
 
-            Route::middleware(RedirectIfNotOwner::class)->group(function () {
-                Route::get('publish', [TranslationController::class, 'publish'])->name('translation.publish');
-                Route::post('publish', [TranslationController::class, 'export'])->name('translation.export');
-                Route::get('download', [TranslationController::class, 'download'])->name('translation.download');
-            });
+            Route::get('publish', [TranslationController::class, 'publish'])->name('translation.publish');
+            Route::post('publish', [TranslationController::class, 'export'])->name('translation.export');
+            Route::get('download', [TranslationController::class, 'download'])->name('translation.download');
 
             Route::get('add-translation', [TranslationController::class, 'create'])->name('translation.create');
             Route::post('add-translation', [TranslationController::class, 'store'])->name('translation.store');
