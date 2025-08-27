@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Outhebox\TranslationsUI\Actions\CreateTranslationForLanguageAction;
@@ -30,6 +32,7 @@ class TranslationController extends BaseController
     {
         try {
             app(TranslationsManager::class)->export();
+            Cache::forever('translations:version', Str::uuid()->toString());
 
             return back()->with('notification', [
                 'type' => 'success',
