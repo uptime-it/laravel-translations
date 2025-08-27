@@ -32,7 +32,11 @@ class TranslationController extends BaseController
     {
         try {
             app(TranslationsManager::class)->export();
-            Cache::forever('translations:version', Str::uuid()->toString());
+
+            // Cache translation version, so that other pods can invalidate their caches
+            $version = Str::uuid()->toString();
+            Cache::forever('translations:version', $version);
+            Cache::put('translations:version:'.gethostname(), $version, now()->addDay());
 
             return back()->with('notification', [
                 'type' => 'success',
